@@ -4,7 +4,7 @@ Small Python script to generate random passwords, supports generating passwords 
 
 ### Usage
 ```
-usage: uzume.py [-h] [-l LENGTH] [-u] [-n] [-s]
+usage: python uzume.py [-h] [-l LENGTH] [-u] [-n] [-s]
 
 options:
   -h, --help            show this help message and exit
