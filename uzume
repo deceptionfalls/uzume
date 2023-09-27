@@ -2,6 +2,7 @@
 import random, string
 import argparse
 import os
+import sys
 
 arg_to_charset = {
         'uppercase': string.ascii_letters,
@@ -27,10 +28,10 @@ def randompass():
 
     output = ''.join(random.choice(''.join(charsets)) for _ in range(length))
 
-    if "NO_COLOR" in os.environ:
+    if "NO_COLOR" in os.environ or not sys.stdout.isatty():
         return output
     else:
-        return '\033[93m'+output+'\033[0m' # colored output
+        return '\033[93m' + output + '\033[0m' # colored output
 
 
 if __name__ == '__main__':
