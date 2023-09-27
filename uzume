@@ -13,18 +13,25 @@ parser.add_argument("length", default=10, type=int, nargs='?', help='Length of t
 parser.add_argument("-u", "--uppercase", action='store_true', required=False, help='Include uppercase letters')
 parser.add_argument("-n", "--numbers", action='store_true', required=False, help='Include numbers')
 parser.add_argument("-s", "--symbols", action='store_true', required=False, help='Include symbols')
+parser.add_argument("-c", "--color", action='store_true', required=False, help='Colored output')
 
 a = parser.parse_args()
 
 def randompass():
     length = a.length
-    letters = string.ascii_lowercase
+    charsets = [string.ascii_lowercase]
 
     for arg, charset in arg_to_charset.items():
         if getattr(a, arg):
-            letters += charset
+            charsets.append(charset)
 
-    return ''.join(random.choice(letters) for i in range(length))
+    output = ''.join(random.choice(''.join(charsets)) for _ in range(length))
+
+    if a.color is False:
+        return output
+    else:
+        return '\033[93m'+output+'\033[0m' # colored output
+
 
 if __name__ == '__main__':
-    print(f'\033[93m{randompass()}\033[0m')
+    print(randompass())
