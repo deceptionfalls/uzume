@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+import random, string
+import argparse
+
+arg_to_charset = {
+        'uppercase': string.ascii_letters,
+        'numbers': string.digits,
+        'symbols': string.punctuation
+}
+
+parser = argparse.ArgumentParser()
+parser.add_argument("length", default=10, type=int, nargs='?', help='Length of the generated password. Defaults to 10')
+parser.add_argument("-u", "--uppercase", action='store_true', required=False, help='Include uppercase letters')
+parser.add_argument("-n", "--numbers", action='store_true', required=False, help='Include numbers')
+parser.add_argument("-s", "--symbols", action='store_true', required=False, help='Include symbols')
+
+a = parser.parse_args()
+
+def randompass():
+    length = a.length
+    letters = string.ascii_lowercase
+
+    for arg, charset in arg_to_charset.items():
+        if getattr(a, arg):
+            letters += charset
+
+    return ''.join(random.choice(letters) for i in range(length))
+
+if __name__ == '__main__':
+    print(f'\033[93m{randompass()}\033[0m')
