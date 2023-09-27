@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import random, string
 import argparse
+import os
 
 arg_to_charset = {
         'uppercase': string.ascii_letters,
@@ -13,7 +14,6 @@ parser.add_argument("length", default=10, type=int, nargs='?', help='Length of t
 parser.add_argument("-u", "--uppercase", action='store_true', required=False, help='Include uppercase letters')
 parser.add_argument("-n", "--numbers", action='store_true', required=False, help='Include numbers')
 parser.add_argument("-s", "--symbols", action='store_true', required=False, help='Include symbols')
-parser.add_argument("-c", "--color", action='store_true', required=False, help='Colored output')
 
 a = parser.parse_args()
 
@@ -27,7 +27,7 @@ def randompass():
 
     output = ''.join(random.choice(''.join(charsets)) for _ in range(length))
 
-    if a.color is False:
+    if "NO_COLOR" in os.environ:
         return output
     else:
         return '\033[93m'+output+'\033[0m' # colored output
